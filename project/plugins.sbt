@@ -1,0 +1,7 @@
+addSbtPlugin("com.github.sbt" % "sbt-protobuf" % "0.7.2")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.6")
+addSbtPlugin("com.github.sbt" % "sbt-release" % "1.1.0")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.9.1")
+//addSbtPlugin("com.lightbend.akka.grpc" % "sbt-akka-grpc" % "2.0.0")
+addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.4.2")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "1.0.0")

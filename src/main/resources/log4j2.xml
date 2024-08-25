@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration shutdownHook="disable">
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%d [%t] %-5level [%logger] %m%n "/>
+        </Console>
+
+        <Console name="ConsoleJSONAppender">
+            <JsonTemplateLayout eventTemplateUri="classpath:CkServerLogLayout.json"/>
+        </Console>
+
+        <Async name="AsyncConsole">
+            <!--            <AppenderRef ref="ConsoleJSONAppender"/>-->
+            <AppenderRef ref="Console"/>
+        </Async>
+
+        <EnvironmentArbiter propertyName="CONF_ENV" propertyValue="prod">
+            <Console name="TLogConsole">
+                <PatternLayout pattern="%m%n"/>
+            </Console>
+
+            <Async name="AsyncConsoleSocket">
+                <AppenderRef ref="TLogConsole"/>
+            </Async>
+
+            <Socket name="tlog" host="tglog-udp-server" port="50700" protocol="udp" connectTimeoutMillis="5000"
+                    reconnectionDelayMillis="5000">
+                <PatternLayout pattern="%m"/>
+            </Socket>
+        </EnvironmentArbiter>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="CmkLobbyServerLogger" level="${env:CONF_LOG_LEVEL_SERVER:-INFO}" additivity="false">
+            <AppenderRef ref="AsyncConsole"/>
+        </Logger>
+
+        <Logger name="CmkLobbyAccessLogger" level="${env:CONF_LOG_LEVEL_ACCESS:-INFO}" additivity="false">
+            <AppenderRef ref="AsyncConsole"/>
+        </Logger>
+
+        <Logger name="CmkLobbyAnalyticsLogger" level="${env:CONF_LOG_LEVEL_ANALYTICS:-INFO}" additivity="false">
+            <AppenderRef ref="AsyncConsole"/>
+        </Logger>
+
+        <Logger name="gs2vs" level="${env:CONF_LOG_LEVEL_ECS:-INFO}" additivity="false">
+            <AppenderRef ref="AsyncConsole"/>
+        </Logger>
+
+        <!--        <EnvironmentArbiter propertyName="CONF_ENV" propertyValue="prod">-->
+        <!--            <Logger name="TLog" level="info" additivity="false">-->
+        <!--                <AppenderRef ref="tlog"/>-->
+        <!--                <AppenderRef ref="AsyncConsoleSocket"/>-->
+        <!--            </Logger>-->
+        <!--        </EnvironmentArbiter>-->
+
+        <Root level="${env:CONF_LOG_LEVEL_ROOT_LOGGER:-INFO}">
+            <AppenderRef ref="AsyncConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package gs2vs;
+
+option java_package = "gs2vs.services.protobuf";
+option csharp_namespace = "Services.Protobuf";
+
+message Empty {}
+
+message Coordinates {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Cell {
+  int32 row = 1;
+  int32 column = 2;
+}
+
+message Date {
+  int32 year = 3;
+  int32 month = 2;
+  int32 date = 1;
+}
+
+message Time {
+  int64 current_time_millis = 1;
+}
+
+message AchievementCounter2 {
+  message Record {
+    int64 count = 1;
+    int32 first_data_id = 2;
+    int32 second_data_id = 3;
+  }
+
+  repeated Record records = 1;
+}
+
+message DataIds {
+  repeated int32 values = 1;
+}
+
+message DataIdAndCounts {
+  map<int32, int64> values = 1;
+}
+
+message Duration {
+  int64 millis = 1;
+}
